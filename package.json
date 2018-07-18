@@ -1,0 +1,15 @@
+{
+  "name": "more_jpeg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "aws-sdk": "^2.276.1",
+    "eslint": "^5.1.0"
+  },
+  "dependencies": {
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-apigwy-binary": "^0.1.0",
+    "sharp": "^0.20.5"
+  }
+}
