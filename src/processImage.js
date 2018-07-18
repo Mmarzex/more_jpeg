@@ -42,21 +42,6 @@ module.exports.getProcessedImages = async () => {
   }
 }
 
-module.exports.getImage = async (name) => {
-  try {
-    const image = await s3.getObject({
-      Bucket: process.env.IMAGE_BUCKET,
-      Key: `processed/${name}.jpg`
-    }).promise()
-    // return image.Body.toString('binary')
-    const data = new Buffer(image.Body.buffer, 'base64')
-    return { image: data.toString('base64'), contentType: image.ContentType }
-    // return data.toString('base64')
-  } catch (err) {
-    return err
-  }
-}
-
 module.exports.getImageSigned = async (name) => {
   try {
     const getSignedUrl = util.promisify(s3.getSignedUrl)
