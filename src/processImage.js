@@ -36,9 +36,9 @@ module.exports.getProcessedImages = async () => {
       Prefix: 'processed/'
     }).promise()
 
-    return imageList.Contents.map(c => c.Key)
+    return imageList.Contents.map(c => c.Key.split('/')[1].split('.')[0])
   } catch (err) {
-    return err
+    return Promise.reject(err)
   }
 }
 
@@ -62,6 +62,23 @@ module.exports.getImageSigned = async (name) => {
     }))
     return data
   } catch (err) {
-    return err
+    return Promise.reject(err)
+  }
+}
+
+module.exports.uploadImage = async (name, imageBody, imageType) => {
+  try {
+    console.log('imageBody ', imageBody)
+    const imageBuffer = new Buffer(imageBody, 'base64')
+    const res = await s3.putObject({
+      ContentEncoding: imageType,
+      Body: imageBuffer,
+      Bucket: process.env.IMAGE_BUCKET,
+      Key: `uploads/${name}`
+    }).promise()
+    console.log('res ', res)
+    return true
+  } catch (err) {
+    return Promise.reject(err)
   }
 }
